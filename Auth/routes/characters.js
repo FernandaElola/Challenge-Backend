@@ -1,12 +1,9 @@
 var express = require('express');
 var router = express.Router();
 const db = require('./../models');
-const { Op } = require('sequelize')
+const { Op } = require('sequelize');
 
 /* GET characters listing. */
-router.get('/', function(req, res) {
-    res.send('characters');
-  });
 
 router.get('/characters', function(req, res) {
     db.Character.findAll({
@@ -24,40 +21,63 @@ router.get('/characters', function(req, res) {
             }
         }
             res.json(respuesta);
-        })
+    }).catch(error => console.log(error))
 });
 
 //  CRUD Characters
 
 router.post('/create', function(req, res) {
-    const {image, name, age, weigth, history} = req.body;
+    const {image, name, age, weight, history} = req.body;
 
     db.Character.create({
         image : image,
         name : name.trim(),
         age : +age,
-        weigth: weigth.trim(),
+        weight: +weight,
         history: history.trim()
     })
+    
+    .then((data) => {
+        let respuesta = {
+            meta: {
+                status : 200,
+                url: 'characters/create'
+            },
+            data: {
+                data
+            }
+        }
+            res.json(respuesta);
+    }).catch(error => console.log(error))
 });
 
 // AGREGAR ?_method=PUT a la URI
 router.put('/update/:id', function(req, res) {
 
-    const {image, name, age, weigth, history} = req.body;
+    const {image, name, age, weight, history} = req.body;
 
     db.Character.update({
         image : image,
         name : name.trim(),
         age : +age,
-        weigth: weigth.trim(),
+        weight: +weight,
         history: history.trim()
     },
     {
         where: {id: req.params.id}
     })
-    console.log(req.params.id);
-    console.log(name);
+    .then((data) => {
+        let respuesta = {
+            meta: {
+                status : 200,
+                url: 'characters/update/:id'
+            },
+            data: {
+                data
+            }
+        }
+            res.json(respuesta);
+    }).catch(error => console.log(error))
 });
 
 // AGREGAR ?_method=DELETE a la URI
@@ -67,6 +87,18 @@ router.delete('/destroy/:id', function(req, res) {
         {
             where: {id: req.params.id}
         })
+    .then((data) => {
+        let respuesta = {
+            meta: {
+                status : 200,
+                url: 'characters/destroy/:id'
+            },
+            data: {
+                data
+            }
+        }
+            res.json(respuesta);
+    }).catch(error => console.log(error))
 });
 
 router.get('/detail/:id', function(req, res) {
@@ -94,45 +126,45 @@ router.get('/detail/:id', function(req, res) {
         .catch(error => console.log(error))
 });
 
-router.get('/search', function(req, res) {
-    db.Character.findAll({
+router.get('/', function(req, res) {
+    let searchName = db.Character.findAll({
         where: {
             name: {
-                [Op.substring]: req.query.name                
+                [Op.substring]: req.query.name               
             }
         },
         attributes : ['name']
-    }).then(searchName => {
-        let respuesta = {
-            meta: {
-                status : 200,
-                url: 'characters/search'
-            },
-            data: {
-                searchName
-            }
-        }
-            res.json(respuesta);
-        })
-        .catch(error => console.log(error))
-});
+    });
 
-router.get('/filter', function(req, res) {
-    db.Character.findAll({
+    let searchAge = db.Character.findAll({
         where: {
             age: {
-                [Op.substring]: req.params.age
+                [Op.like]: req.query.age               
             }
         },
-        attributes : ['name']
-    }).then(searchAge => {
+        attributes : ['name', 'age']
+    })
+
+    let searchMovies = db.Movie.findAll({
+        where: {
+            id: {
+                [Op.like]: req.query.movies               
+            }
+        },
+        attributes : ['title']
+    });
+
+    Promise.all([searchName, searchAge, searchMovies])
+    .then(([searchName, searchAge, searchMovies]) => {
         let respuesta = {
             meta: {
                 status : 200,
-                url: 'characters/filter'
+                url: 'characters'
             },
             data: {
-                searchAge
+                searchName,
+                searchAge,
+                searchMovies
             }
         }
             res.json(respuesta);

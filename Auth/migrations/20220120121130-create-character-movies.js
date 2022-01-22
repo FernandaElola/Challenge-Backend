@@ -16,7 +16,8 @@ module.exports = {
             tableName: "Characters"
           },
           key : 'id'
-        }
+        },
+        update : 'cascade'
       },
       movieId: {
         type: Sequelize.INTEGER,
@@ -26,7 +27,8 @@ module.exports = {
             tableName: "Movies"
           },
           key : 'id'
-        }
+        },
+        update : 'cascade'
       },
       createdAt: {
         allowNull: false,
