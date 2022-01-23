@@ -129,47 +129,50 @@ router.delete('/destroy/:id', function(req, res) {
 });
 
 router.get('/', function(req, res) {
-    let searchTitle = db.Movie.findAll({
-        where: {
-            title: {
-                [Op.substring]: req.query.name                
-            }
-        },
-        attributes : ['title']
-    });
 
-    let searchGenre = db.Movie.findAll({
-        where: {
-            genreId: {
-                [Op.like]: req.query.genre            
-            }
-        },   
-        attributes: ['title']
-    });
-
-    // let releaseDate = db.Movie.findAll({
-    //     order: [
-    //         ['releaseDate', 'ASC'],
-    //         ['releaseDate', 'DESC']
-    //     ]
-    // });
-
-    Promise.all([searchTitle, searchGenre])
-    
-    .then(([searchTitle, searchGenre]) => {
-        let respuesta = {
-            meta: {
-                status : 200,
-                url: 'movies'
-            },
-            data: {
-                searchTitle,
-                searchGenre        
-            }
+    function getMovieSearch(req) {
+        movieSearch = {};
+        
+        if (req.query.name) {
+          movieSearch.title = {
+            [Op.substring]: req.query.name,
+          };
         }
-            res.json(respuesta);
-        })
-        .catch(error => console.log(error))
-});
-
+        
+        if (req.query.genre) {
+          movieSearch.genreId = {
+            [Op.like]: req.query.genre,
+          };
+        }
+       
+        if (req.query.order) {
+          movieSearch.releaseDate = {
+            [Op.like]: req.query.order
+          };
+        }
+  
+        return movieSearch;
+      }
+  
+    db.Movie.findAll(
+      {
+        where: getMovieSearch(req),
+      },
+    )
+  
+      .then(searchResults => {
+        let respuesta = {
+          meta: {
+            status: 200,
+            url: "movies",
+          },
+          data: {
+            searchResults
+          },
+        };
+        res.json(respuesta);
+      })
+      .catch((error) => console.log(error));
+  })
+   
 module.exports = router;
