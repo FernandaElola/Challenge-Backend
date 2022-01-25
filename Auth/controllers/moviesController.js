@@ -1,5 +1,6 @@
 const db = require('../database/models');
 const { Op } = require('sequelize')
+const {validationResult} = require('express-validator');
 
 module.exports = {
     moviesList : (req, res) => {
@@ -80,6 +81,11 @@ module.exports = {
         .catch(error => console.log(error))
     },
     create : (req, res) => {
+
+        let errors = validationResult(req);
+        
+        if(errors.isEmpty()){
+
         const {image, title, releaseDate, rating, genreId} = req.body;
     
         db.Movie.create({
@@ -90,7 +96,7 @@ module.exports = {
             genreId: +genreId
         })
         .then(create => {
-            let respuesta = {
+            let response = {
                 meta: {
                     status : 200,
                     url: 'movies/create'
@@ -99,11 +105,24 @@ module.exports = {
                     create
                 }
             }
-                res.json(respuesta);
+                res.json(response);
             })
         .catch(error => console.log(error))
+        
+    }else{
+        let response = {
+            meta: {
+                status : 400,
+                errors: errors.mapped()
+            }
+        }
+        res.status(400).json(response);
+    }
     },
     update : (req, res) => {
+        let errors = validationResult(req);
+        
+        if(errors.isEmpty()){
 
         const {image, title, releaseDate, rating, genreId} = req.body;
     
@@ -131,6 +150,15 @@ module.exports = {
                 res.json(respuesta);
             })
             .catch(error => console.log(error))
+        }else{
+            let response = {
+                meta: {
+                    status : 400,
+                    errors: errors.mapped()
+                }
+            }
+            res.status(400).json(response);
+        }
     },
     destroy : (req, res) => {
         db.Movie.destroy(

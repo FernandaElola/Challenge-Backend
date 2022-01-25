@@ -18,7 +18,7 @@ module.exports = {
         type: Sequelize.DATE
       },
       rating: {
-        type: Sequelize.DECIMAL
+        type: Sequelize.INTEGER
       },
       genreId: {
         type: Sequelize.INTEGER,

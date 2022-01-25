@@ -5,7 +5,7 @@ let movies = [
      "image": "plane-crazy.jpg",
      "title": "Plane Crazy",
      "releaseDate": "1928-01-01",
-     "rating" : 7,
+     "rating" : 5,
      "genreId": 1,
      createdAt : new Date,
      updatedAt : new Date
@@ -23,7 +23,7 @@ let movies = [
       "image": "donald.png",
       "title": "Donald Duck Movie",
       "releaseDate": "1996-01-01",
-      "rating" : 3,
+      "rating" : 6,
       "genreId": 3,
       createdAt : new Date,
       updatedAt : new Date
