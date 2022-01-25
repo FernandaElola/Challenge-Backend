@@ -7,20 +7,57 @@ module.exports = {
         db.Character.findAll({
           attributes: ["name", "image"],
         })
-          .then((characters) => {
-            let respuesta = {
-              meta: {
-                status: 200,
-                total: characters.length,
-                url: "characters",
-              },
-              data: {
-                characters,
-              },
+         
+        function getCharacterSearch(req) {
+          characterSearch = {};
+          
+          if (req.query.name) {
+            characterSearch.name = {
+              [Op.substring]: req.query.name,
             };
-            res.json(respuesta);
-          })
-          .catch((error) => console.log(error));        
+          }
+          
+          if (req.query.age) {
+            characterSearch.age = {
+              [Op.like]: req.query.age,
+            };
+          }
+         
+          if (req.query.weight) {
+            characterSearch.weight = {
+              [Op.like]: req.query.weight,
+            };
+          }
+    
+          if (req.query.movies) {
+            characterSearch.idMovie = {
+              [Op.like]: req.query.movies,
+            };
+          }
+    
+          return characterSearch;
+        }
+    
+      db.Character.findAll(
+        {
+          where: getCharacterSearch(req),
+        },
+      )
+
+        .then(data => {
+          let respuesta = {
+            meta: {
+              status: 200,
+              url: "characters",
+            },
+            data: {
+              data
+            },
+          };
+          res.json(respuesta);
+        })
+        .catch((error) => console.log(error));
+    
     },
     create : (req, res) => {
         const { image, name, age, weight, history } = req.body;
@@ -121,59 +158,7 @@ module.exports = {
             res.json(respuesta);
           })
           .catch((error) => console.log(error));
-    }, 
-    search : (req, res) => { 
-
-        function getCharacterSearch(req) {
-          characterSearch = {};
-          
-          if (req.query.name) {
-            characterSearch.name = {
-              [Op.substring]: req.query.name,
-            };
-          }
-          
-          if (req.query.age) {
-            characterSearch.age = {
-              [Op.like]: req.query.age,
-            };
-          }
-         
-          if (req.query.weight) {
-            characterSearch.weight = {
-              [Op.like]: req.query.weight,
-            };
-          }
-    
-        //   if (req.query.idMovie) {
-        //     characterSearch.idMovie = {
-        //       [Op.like]: req.query.idMovie,
-        //     };
-        //   }
-    
-          return characterSearch;
-        }
-    
-      db.Character.findAll(
-        {
-          where: getCharacterSearch(req),
-        },
-      )
-    
-        .then(searchResults => {
-          let respuesta = {
-            meta: {
-              status: 200,
-              url: "characters/search",
-            },
-            data: {
-              searchResults
-            },
-          };
-          res.json(respuesta);
-        })
-        .catch((error) => console.log(error));
-    }   
+    }
 }
     
       

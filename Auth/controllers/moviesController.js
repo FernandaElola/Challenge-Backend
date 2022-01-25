@@ -6,20 +6,53 @@ module.exports = {
         db.Movie.findAll({
             attributes : ['image', 'title', 'releaseDate']
         })
-        .then(movies => {
-            let respuesta = {
-                meta: {
-                    status : 200,
-                    total: movies.length,
-                    url: 'movies'
-                },
-                data: {
-                    movies
-                }
+        function getMovieSearch(req) {
+            movieSearch = {};
+            
+            if (req.query.name) {
+              movieSearch.title = {
+                [Op.substring]: req.query.name,
+              };
             }
-                res.json(respuesta);
-            })
-        .catch(error => console.log(error))
+            
+            if (req.query.genre) {
+              movieSearch.genreId = {
+                [Op.like]: req.query.genre,
+              };
+            }
+           
+            if (req.query.order) {
+              movieSearch.releaseDate = {
+                [Op.like]: req.query.order
+              };
+            }
+
+            // order : [
+               // ["title",req.query.order && req.query.order.toUpperCase() == "DESC" ? req.query.order : "ASC"]
+            //]
+      
+            return movieSearch;
+          }
+      
+        db.Movie.findAll(
+          {
+            where: getMovieSearch(req),
+          },
+        )
+      
+          .then(data => {
+            let respuesta = {
+              meta: {
+                status: 200,
+                url: "movies",
+              },
+              data: {
+                data
+              },
+            };
+            res.json(respuesta);
+          })
+          .catch((error) => console.log(error));      
     },
     detail : (req, res) => {
         db.Movie.findOne({
@@ -117,51 +150,5 @@ module.exports = {
                 res.json(respuesta);
             })
         .catch(error => console.log(error))
-    },
-    searchMovies : (req, res) => {
-
-        function getMovieSearch(req) {
-            movieSearch = {};
-            
-            if (req.query.name) {
-              movieSearch.title = {
-                [Op.substring]: req.query.name,
-              };
-            }
-            
-            if (req.query.genre) {
-              movieSearch.genreId = {
-                [Op.like]: req.query.genre,
-              };
-            }
-           
-            if (req.query.order) {
-              movieSearch.releaseDate = {
-                [Op.like]: req.query.order
-              };
-            }
-      
-            return movieSearch;
-          }
-      
-        db.Movie.findAll(
-          {
-            where: getMovieSearch(req),
-          },
-        )
-      
-          .then(searchResults => {
-            let respuesta = {
-              meta: {
-                status: 200,
-                url: "movies",
-              },
-              data: {
-                searchResults
-              },
-            };
-            res.json(respuesta);
-          })
-          .catch((error) => console.log(error));
-      }
+    }
 }
