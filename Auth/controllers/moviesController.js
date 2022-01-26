@@ -4,9 +4,7 @@ const {validationResult} = require('express-validator');
 
 module.exports = {
     moviesList : (req, res) => {
-        db.Movie.findAll({
-            attributes : ['image', 'title', 'releaseDate']
-        })
+
         function getMovieSearch(req) {
             movieSearch = {};
             
@@ -26,6 +24,7 @@ module.exports = {
       
         db.Movie.findAll(
           {
+            attributes : ['image', 'title', 'releaseDate'],
             where: getMovieSearch(req),
             order : [
                 ["releaseDate", req.query.order == "DESC" ? req.query.order : "ASC"]
@@ -34,7 +33,7 @@ module.exports = {
         )
       
           .then(data => {
-            let respuesta = {
+            let response = {
               meta: {
                 status: 200,
                 url: "movies",
@@ -43,7 +42,7 @@ module.exports = {
                 data
               },
             };
-            res.json(respuesta);
+            res.json(response);
           })
           .catch((error) => console.log(error));      
     },
@@ -58,8 +57,8 @@ module.exports = {
                 attributes: ['name']
               }
         })
-        .then(movieDetail => {
-            let respuesta = {
+        .then(data => {
+            let response = {
                 meta: {
                     status : 200,
                     url: 'movies/detail/:id'
@@ -68,7 +67,7 @@ module.exports = {
                     movieDetail
                 }
             }
-                res.json(respuesta);
+                res.json(response);
             })
         .catch(error => console.log(error))
     },
@@ -87,14 +86,14 @@ module.exports = {
             rating: +rating,
             genreId: +genreId
         })
-        .then(create => {
+        .then((data) => {
             let response = {
                 meta: {
                     status : 200,
                     url: 'movies/create'
                 },
                 data: {
-                    create
+                    data
                 }
             }
                 res.json(response);
@@ -129,8 +128,8 @@ module.exports = {
             where: {id: req.params.id}
         })
         
-        .then(data => {
-            let respuesta = {
+        .then((data) => {
+            let response = {
                 meta: {
                     status : 200,
                     url: 'movies/update/:id'
@@ -139,7 +138,7 @@ module.exports = {
                     data     
                 }
             }
-                res.json(respuesta);
+                res.json(response);
             })
             .catch(error => console.log(error))
         }else{
@@ -157,17 +156,17 @@ module.exports = {
             {
                 where: {id: req.params.id}
             })
-        .then(destroy => {
-            let respuesta = {
+        .then((data) => {
+            let response = {
                 meta: {
                     status : 200,
                     url: 'movies/destroy/:id'
                 },
                 data: {
-                    destroy
+                    data
                 }
             }
-                res.json(respuesta);
+                res.json(response);
             })
         .catch(error => console.log(error))
     }

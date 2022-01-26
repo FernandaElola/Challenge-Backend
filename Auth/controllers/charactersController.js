@@ -48,16 +48,16 @@ module.exports = {
     })
 
       .then((data) => {
-        let respuesta = {
+        let response = {
           meta: {
             status: 200,
             url: "characters",
           },
           data: {
-            data,
+            data
           },
         };
-        res.json(respuesta);
+        res.json(response);
       })
       .catch((error) => console.log(error));
   },
@@ -73,16 +73,16 @@ module.exports = {
     })
 
       .then((data) => {
-        let respuesta = {
+        let response = {
           meta: {
             status: 200,
             url: "characters/create",
           },
           data: {
-            data,
+            data
           },
         };
-        res.json(respuesta);
+        res.json(response);
       })
       .catch((error) => console.log(error));
   },
@@ -102,16 +102,16 @@ module.exports = {
       }
     )
       .then((data) => {
-        let respuesta = {
+        let response = {
           meta: {
             status: 200,
             url: "characters/update/:id",
           },
           data: {
-            data,
+            data
           },
         };
-        res.json(respuesta);
+        res.json(response);
       })
       .catch((error) => console.log(error));
   },
@@ -121,7 +121,7 @@ module.exports = {
       where: { id: req.params.id },
     })
       .then((data) => {
-        let respuesta = {
+        let response = {
           meta: {
             status: 200,
             url: "characters/destroy/:id",
@@ -130,7 +130,7 @@ module.exports = {
             data,
           },
         };
-        res.json(respuesta);
+        res.json(response);
       })
       .catch((error) => console.log(error));
   },
@@ -147,17 +147,17 @@ module.exports = {
         },
       ],
     })
-      .then((characterDetail) => {
-        let respuesta = {
+      .then((data) => {
+        let response = {
           meta: {
             status: 200,
             url: "characters/detail/:id",
           },
           data: {
-            characterDetail,
+            data
           },
         };
-        res.json(respuesta);
+        res.json(response);
       })
       .catch((error) => console.log(error));
   },
