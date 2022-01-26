@@ -9,19 +9,24 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       image: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING, //temporary info for images
+        allowNull : false
       },
       name: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull : false
       },
       age: {
-        type: Sequelize.DECIMAL
+        type: Sequelize.DECIMAL,
+        allowNull : false
       },
       weight: {
-        type: Sequelize.DECIMAL
+        type: Sequelize.DECIMAL,
+        allowNull : false
       },
       history: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING(500),
+        allowNull : false
       },
       createdAt: {
         allowNull: false,

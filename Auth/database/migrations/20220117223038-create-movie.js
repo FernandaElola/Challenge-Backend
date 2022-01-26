@@ -9,16 +9,20 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       image: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull : false
       },
       title: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull : false
       },
       releaseDate: {
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
+        allowNull : false
       },
       rating: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        allowNull : false
       },
       genreId: {
         type: Sequelize.INTEGER,

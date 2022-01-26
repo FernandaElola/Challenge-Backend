@@ -5,17 +5,20 @@ module.exports = {
     
       await queryInterface.bulkInsert('Genres', [
       {
-         name : 'comedia',
+         name : 'comedy',
+         image : 'comedy.jpg',
          createdAt : new Date,
          updatedAt : new Date
         },
         {
-         name : 'animacion',
+         name : 'animation',
+         image : 'animation.jpg',
          createdAt : new Date,
          updatedAt : new Date
         },
         {
          name : 'drama',
+         image : 'drama.jpg',
          createdAt : new Date,
          updatedAt : new Date
         }

@@ -5,25 +5,25 @@ let movies = [
      "image": "plane-crazy.jpg",
      "title": "Plane Crazy",
      "releaseDate": "1928-01-01",
-     "rating" : 5,
+     "rating" : 4,
      "genreId": 1,
      createdAt : new Date,
      updatedAt : new Date
   },
   {
-      "image": "goofy.png",
-      "title": "Goofy Movie",
-      "releaseDate": "1943-01-01",
+      "image": "how-to play-football.png",
+      "title": "How to Play Football",
+      "releaseDate": "1944-05-09",
       "rating" : 5,
       "genreId": 2,
       createdAt : new Date,
       updatedAt : new Date
   },
   {
-      "image": "donald.png",
-      "title": "Donald Duck Movie",
-      "releaseDate": "1996-01-01",
-      "rating" : 6,
+      "image": "the-wise-little-hen.png",
+      "title": "The Wise Little Hen",
+      "releaseDate": "1934-09-06",
+      "rating" : 3,
       "genreId": 3,
       createdAt : new Date,
       updatedAt : new Date

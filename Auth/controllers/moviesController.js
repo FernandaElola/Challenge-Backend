@@ -20,24 +20,16 @@ module.exports = {
               movieSearch.genreId = {
                 [Op.like]: req.query.genre,
               };
-            }
-           
-            if (req.query.order) {
-              movieSearch.releaseDate = {
-                [Op.like]: req.query.order
-              };
-            }
-
-            // order : [
-               // ["title",req.query.order && req.query.order.toUpperCase() == "DESC" ? req.query.order : "ASC"]
-            //]
-      
+            }      
             return movieSearch;
           }
       
         db.Movie.findAll(
           {
             where: getMovieSearch(req),
+            order : [
+                ["releaseDate", req.query.order == "DESC" ? req.query.order : "ASC"]
+            ]
           },
         )
       
