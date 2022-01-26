@@ -1,0 +1,869 @@
+{
+	"info": {
+		"_postman_id": "49d147f6-5508-4115-a10a-4ccf7d6a5401",
+		"name": "Disney API",
+		"description": "# Introduction\nAPI Mundo Disney, desarrollada para el challenge de Alkemy.\nEsta API nos permite explorar y modificar los\npersonajes y películas de Disney.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Register",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "first_name",
+							"value": "nombre",
+							"type": "text"
+						},
+						{
+							"key": "last_name",
+							"value": "lastname",
+							"type": "text"
+						},
+						{
+							"key": "email",
+							"value": "email@gmail.com",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "123123",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:3000/auth/register",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"auth",
+						"register"
+					]
+				},
+				"description": "Endpoing encargado del registro de usuarios y envío de email de bienvenida."
+			},
+			"response": []
+		},
+		{
+			"name": "Login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "email",
+							"value": "email@gmail.com",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "123123",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:3000/auth/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"auth",
+						"login"
+					]
+				},
+				"description": "Endpoing encargado del login de usuarios registrados."
+			},
+			"response": [
+				{
+					"name": "Usuario no registrado",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email",
+									"value": "email-noregistrado@gmail.com",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "123123",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3000/auth/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "31"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"1f-Eu7acQ2UOG+Ax3bOeoQ6j2I+PFE\""
+						},
+						{
+							"key": "Date",
+							"value": "Wed, 26 Jan 2022 19:58:03 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"error\": \"User does not exist\"\n}"
+				},
+				{
+					"name": "Password incorrecta",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email",
+									"value": "email@gmail.com",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "pass-incorrecta",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3000/auth/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "30"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"1e-B/6WMNlD35jLfiLIFkuWI41ryxw\""
+						},
+						{
+							"key": "Date",
+							"value": "Wed, 26 Jan 2022 19:58:53 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"error\": \"Password Incorrect\"\n}"
+				},
+				{
+					"name": "Login existoso",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email",
+									"value": "email@gmail.com",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "123123",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3000/auth/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "191"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"bf-L6iNDjUlx1POEginjEO696R3mXs\""
+						},
+						{
+							"key": "Date",
+							"value": "Wed, 26 Jan 2022 19:59:33 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJlbWFpbEBnbWFpbC5jb20iLCJmaXJzdF9uYW1lIjoibm9tYnJlIiwiaWF0IjoxNjQzMjI3MTczfQ.4hHIg90nao5HMv3zLDwjdq7HwXwh8hcAxGtav_YXSfA\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Characters List",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/characters",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"characters"
+					]
+				},
+				"description": "Endpoing que muestra lista de personajes y filtra por edad o peso, en caso de ingresar el query correspondiente."
+			},
+			"response": [
+				{
+					"name": "Busqueda por nombre y filtro por edad",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/characters?name=donald&age=86",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"characters"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "donald"
+								},
+								{
+									"key": "age",
+									"value": "86"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "104"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"68-frvZx2Tdp3yLvRGHILc4NClyIRM\""
+						},
+						{
+							"key": "Date",
+							"value": "Wed, 26 Jan 2022 20:02:50 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"meta\": {\n        \"status\": 200,\n        \"url\": \"characters\"\n    },\n    \"data\": {\n        \"data\": [\n            {\n                \"name\": \"Donald Duck\",\n                \"image\": \"donald.png\"\n            }\n        ]\n    }\n}"
+				}
+			]
+		},
+		{
+			"name": "Create Character",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "image",
+							"value": "image.jpg",
+							"type": "text"
+						},
+						{
+							"key": "name",
+							"value": "character name",
+							"type": "text"
+						},
+						{
+							"key": "age",
+							"value": "30",
+							"type": "text"
+						},
+						{
+							"key": "weight",
+							"value": "10",
+							"type": "text"
+						},
+						{
+							"key": "history",
+							"value": "character's history",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:3000/characters/create",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"characters",
+						"create"
+					]
+				},
+				"description": "Endpoing encargado del registro de usuarios y envío de email de bienvenida."
+			},
+			"response": []
+		},
+		{
+			"name": "Update Character",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "image",
+							"value": "image.jpg",
+							"type": "text"
+						},
+						{
+							"key": "name",
+							"value": "character name edit",
+							"type": "text"
+						},
+						{
+							"key": "age",
+							"value": "30",
+							"type": "text"
+						},
+						{
+							"key": "weight",
+							"value": "10",
+							"type": "text"
+						},
+						{
+							"key": "history",
+							"value": "character's history",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:3000/characters/update/4",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"characters",
+						"update",
+						"4"
+					]
+				},
+				"description": "Endpoing encargado del registro de usuarios y envío de email de bienvenida."
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Character",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "image",
+							"value": "image.jpg",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "name",
+							"value": "character name edit",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "age",
+							"value": "30",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "weight",
+							"value": "10",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "history",
+							"value": "character's history",
+							"type": "text",
+							"disabled": true
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:3000/characters/destroy/4",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"characters",
+						"destroy",
+						"4"
+					]
+				},
+				"description": "Endpoing encargado del registro de usuarios y envío de email de bienvenida."
+			},
+			"response": []
+		},
+		{
+			"name": "Movies List",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/characters",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"characters"
+					]
+				},
+				"description": "Endpoing que muestra lista de películas o búsqueda por título, filtro por género y ordena de manera descendiente en caso de ingresar el query correspondiente."
+			},
+			"response": [
+				{
+					"name": "Movies List order DESC",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/movies?order=DESC",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"movies"
+							],
+							"query": [
+								{
+									"key": "order",
+									"value": "DESC"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "363"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"16b-j99FWVW4AbBIPf9IefrGWWwzCz4\""
+						},
+						{
+							"key": "Date",
+							"value": "Wed, 26 Jan 2022 20:15:31 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"meta\": {\n        \"status\": 200,\n        \"url\": \"movies\"\n    },\n    \"data\": {\n        \"data\": [\n            {\n                \"image\": \"how-to play-football.png\",\n                \"title\": \"How to Play Football\",\n                \"releaseDate\": \"1944-05-09T00:00:00.000Z\"\n            },\n            {\n                \"image\": \"the-wise-little-hen.png\",\n                \"title\": \"The Wise Little Hen\",\n                \"releaseDate\": \"1934-09-06T00:00:00.000Z\"\n            },\n            {\n                \"image\": \"plane-crazy.jpg\",\n                \"title\": \"Plane Crazy\",\n                \"releaseDate\": \"1928-01-01T00:00:00.000Z\"\n            }\n        ]\n    }\n}"
+				}
+			]
+		},
+		{
+			"name": "Create Movie",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "image",
+							"value": "image-movie.jpg",
+							"type": "text"
+						},
+						{
+							"key": "title",
+							"value": "movie title",
+							"type": "text"
+						},
+						{
+							"key": "releaseDate",
+							"value": "2020-01-01",
+							"type": "text"
+						},
+						{
+							"key": "rating",
+							"value": "4",
+							"type": "text"
+						},
+						{
+							"key": "genreId",
+							"value": "2",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:3000/movies/create",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"movies",
+						"create"
+					]
+				},
+				"description": "Endpoing encargado del registro de usuarios y envío de email de bienvenida."
+			},
+			"response": [
+				{
+					"name": "Error: Rating validation",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "image",
+									"value": "image-movie.jpg",
+									"type": "text"
+								},
+								{
+									"key": "title",
+									"value": "movie title",
+									"type": "text"
+								},
+								{
+									"key": "releaseDate",
+									"value": "2020-01-01",
+									"type": "text"
+								},
+								{
+									"key": "rating",
+									"value": "6",
+									"type": "text"
+								},
+								{
+									"key": "genreId",
+									"value": "2",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3000/movies/create",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"movies",
+								"create"
+							]
+						}
+					},
+					"status": "Bad Request",
+					"code": 400,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "135"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"87-Km0IDZQ9pbcFWPZ5DPmjF26Y1W8\""
+						},
+						{
+							"key": "Date",
+							"value": "Wed, 26 Jan 2022 20:20:35 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"meta\": {\n        \"status\": 400,\n        \"errors\": {\n            \"rating\": {\n                \"value\": \"6\",\n                \"msg\": \"Debe ingresar un valor entre 1 y 5\",\n                \"param\": \"rating\",\n                \"location\": \"body\"\n            }\n        }\n    }\n}"
+				}
+			]
+		},
+		{
+			"name": "Update Movie",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "image",
+							"value": "image-movie.jpg",
+							"type": "text"
+						},
+						{
+							"key": "title",
+							"value": "movie title edited",
+							"type": "text"
+						},
+						{
+							"key": "releaseDate",
+							"value": "2020-01-01",
+							"type": "text"
+						},
+						{
+							"key": "rating",
+							"value": "4",
+							"type": "text"
+						},
+						{
+							"key": "genreId",
+							"value": "2",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:3000/movies/update/4",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"movies",
+						"update",
+						"4"
+					]
+				},
+				"description": "Endpoing encargado del registro de usuarios y envío de email de bienvenida."
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Movie",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "image",
+							"value": "image-movie.jpg",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "title",
+							"value": "movie title edited",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "releaseDate",
+							"value": "2020-01-01",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "rating",
+							"value": "4",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "genreId",
+							"value": "2",
+							"type": "text",
+							"disabled": true
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:3000/movies/destroy/4",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"movies",
+						"destroy",
+						"4"
+					]
+				},
+				"description": "Endpoing encargado del registro de usuarios y envío de email de bienvenida."
+			},
+			"response": []
+		}
+	]
+}
