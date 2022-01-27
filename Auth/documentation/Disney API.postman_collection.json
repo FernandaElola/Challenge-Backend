@@ -381,6 +381,28 @@
 			]
 		},
 		{
+			"name": "Character Detail",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/characters/detail/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"characters",
+						"detail",
+						"1"
+					]
+				},
+				"description": "Endpoing que muestra toda la informacion de las películas y también los personajes que participaron en ella."
+			},
+			"response": []
+		},
+		{
 			"name": "Create Character",
 			"request": {
 				"method": "POST",
@@ -619,6 +641,28 @@
 					"body": "{\n    \"meta\": {\n        \"status\": 200,\n        \"url\": \"movies\"\n    },\n    \"data\": {\n        \"data\": [\n            {\n                \"image\": \"how-to play-football.png\",\n                \"title\": \"How to Play Football\",\n                \"releaseDate\": \"1944-05-09T00:00:00.000Z\"\n            },\n            {\n                \"image\": \"the-wise-little-hen.png\",\n                \"title\": \"The Wise Little Hen\",\n                \"releaseDate\": \"1934-09-06T00:00:00.000Z\"\n            },\n            {\n                \"image\": \"plane-crazy.jpg\",\n                \"title\": \"Plane Crazy\",\n                \"releaseDate\": \"1928-01-01T00:00:00.000Z\"\n            }\n        ]\n    }\n}"
 				}
 			]
+		},
+		{
+			"name": "Movie Detail",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/movies/detail/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"movies",
+						"detail",
+						"1"
+					]
+				},
+				"description": "Endpoing que muestra toda la informacion de los personajes y también las películas en dónde participó."
+			},
+			"response": []
 		},
 		{
 			"name": "Create Movie",

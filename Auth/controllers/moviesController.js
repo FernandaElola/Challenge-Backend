@@ -64,7 +64,7 @@ module.exports = {
                     url: 'movies/detail/:id'
                 },
                 data: {
-                    movieDetail
+                    data
                 }
             }
                 res.json(response);
