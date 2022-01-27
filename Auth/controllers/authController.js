@@ -7,7 +7,7 @@ const nodemailer = require("nodemailer");
 module.exports = {
   register: async (req, res, next) => {
     const salt = await bcrypt.genSalt(10);
-    var usr = {
+    const usr = {
       first_name: req.body.first_name,
       last_name: req.body.last_name,
       email: req.body.email,
@@ -37,7 +37,7 @@ module.exports = {
             console.log("error is " + error);
             resolve(false);
           } else {
-            console.log("Email enviado: " + info.response);
+            console.log("Email sent: " + info.response);
             resolve(true);
           }
         });
