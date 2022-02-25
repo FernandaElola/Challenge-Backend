@@ -35,8 +35,8 @@ describe("/POST characters", () => {
       .post("/characters/create")
       .send(character)
       .end( function(err,res){
-        res.body.should.have.property('data');
         res.should.have.status(200);
+        res.body.should.have.property('data');        
         done();
       });
   });
