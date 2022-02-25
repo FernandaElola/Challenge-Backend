@@ -26,7 +26,7 @@ Este proyecto desarrolla una API para explorar el mundo de Disney, permite conoc
     * sequelize db:migrate
     * sequelize db:seed:all
 
-- Escribir en consola npm start.
+- Escribir en consola npm start, desde la carpeta Diney API;
 
 - Ingresar en .env la información de la cuenta de email que queremos utilizar para el envío de email de bienvenida.
 

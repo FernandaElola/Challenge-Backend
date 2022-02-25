@@ -96,10 +96,10 @@ module.exports = {
         age: +age,
         weight: +weight,
         history: history.trim(),
-      },
-      {
-        where: { id: req.params.id },
-      }
+        },
+        {
+          where: { id: req.params.id },
+        }
     )
       .then((data) => {
         let response = {
