@@ -64,68 +64,72 @@ module.exports = {
   create: (req, res) => {
     let errors = validationResult(req);
 
-    if (errors.isEmpty()) {      
-    const { image, name, age, weight, history } = req.body;
+    if (errors.isEmpty()) {
+      const { image, name, age, weight, history } = req.body;
 
-    db.Character.create({
-      image: image,
-      name: name.trim(),
-      age: +age,
-      weight: +weight,
-      history: history.trim(),
-    })
-
-      .then((data) => {
-        let response = {
-          meta: {
-            status: 200,
-            url: "characters/create",
-          },
-          data: {
-            data,
-          },
-        };
-        res.json(response);
-      })
-      .catch((error) => console.log(error));
-    } else {
-      let response = {
-        meta: {
-          status: 400,
-          errors: errors.mapped(),
-        },
-      };
-      res.status(400).json(response);
-    }
-  },
-  update: (req, res) => {
-    const { image, name, age, weight, history } = req.body;
-
-    db.Character.update(
-      {
+      db.Character.create({
         image: image,
         name: name.trim(),
         age: +age,
         weight: +weight,
         history: history.trim(),
-      },
-      {
-        where: { id: req.params.id },
-      }
-    )
-      .then((data) => {
-        let response = {
-          meta: {
-            status: 200,
-            url: "characters/update/:id",
-          },
-          data: {
-            data,
-          },
-        };
-        res.json(response);
       })
-      .catch((error) => console.log(error));
+
+        .then((data) => {
+          let response = {
+            meta: {
+              status: 200,
+              url: "characters/create",
+            },
+            data: {
+              data,
+            },
+          };
+          res.json(response);
+        })
+        .catch((error) => console.log(error));
+    } else {
+      res
+        .status(400)
+        .json({ message: "Missing or invalid request parameters" });
+    }
+  },
+  update: (req, res) => {
+    let errors = validationResult(req);
+
+    if (errors.isEmpty()) {
+      const { image, name, age, weight, history } = req.body;
+
+      db.Character.update(
+        {
+          image: image,
+          name: name.trim(),
+          age: +age,
+          weight: +weight,
+          history: history.trim(),
+        },
+        {
+          where: { id: req.params.id },
+        }
+      )
+        .then((data) => {
+          let response = {
+            meta: {
+              status: 200,
+              url: "characters/update/:id",
+            },
+            data: {
+              data,
+            },
+          };
+          res.json(response);
+        })
+        .catch((error) => console.log(error));
+    } else {
+      res
+        .status(400)
+        .json({ message: "Missing or invalid request parameters" });
+    }
   },
   destroy: (req, res) => {
     console.log(req.params.id);
@@ -175,7 +179,7 @@ module.exports = {
             },
           };
           res.json(response);
-        }        
+        }
       })
       .catch((error) => console.log(error));
   },

@@ -1,9 +1,7 @@
 const { body } = require("express-validator");
 
 module.exports = [
-  body("image")
-    .notEmpty()
-    .withMessage("Character image is required"),
+  body("image").notEmpty().withMessage("Character image is required"),
 
   body("name")
     .notEmpty()
@@ -15,20 +13,23 @@ module.exports = [
     .withMessage("Name must be 2 characters or longer"),
 
   body("age")
-    .isDecimal({
-      min: 1,
+    .isInt({
+      min: 0,
     })
-    .withMessage("Must enter a valid number"),
+    .withMessage("Must enter a valid age"),
 
-    body("weight")
+  body("weight")
     .isDecimal({
-      min: 1,
+      min: 0,
     })
-    .withMessage("Must enter a valid number"),
+    .withMessage("Must enter a valid weight"),
 
-    body('history')
-        .notEmpty().withMessage('Character history is required').bail()
-        .isLength({
-            min : 20
-        }).withMessage('History must be 20 characters or longer')
+  body("history")
+    .notEmpty()
+    .withMessage("Character history is required")
+    .bail()
+    .isLength({
+      min: 10,
+    })
+    .withMessage("History must be 10 characters or longer"),
 ];

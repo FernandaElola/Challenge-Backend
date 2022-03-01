@@ -101,13 +101,9 @@ module.exports = {
         })
         .catch((error) => console.log(error));
     } else {
-      let response = {
-        meta: {
-          status: 400,
-          errors: errors.mapped(),
-        },
-      };
-      res.status(400).json(response);
+      res
+        .status(400)
+        .json({ message: "Missing or invalid request parameters" });
     }
   },
   update: (req, res) => {
@@ -143,13 +139,9 @@ module.exports = {
         })
         .catch((error) => console.log(error));
     } else {
-      let response = {
-        meta: {
-          status: 400,
-          errors: errors.mapped(),
-        },
-      };
-      res.status(400).json(response);
+      res
+        .status(400)
+        .json({ message: "Missing or invalid request parameters" });
     }
   },
   destroy: (req, res) => {
