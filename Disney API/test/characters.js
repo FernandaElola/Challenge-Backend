@@ -4,27 +4,29 @@ const app = require("../app");
 const db = require("../database/models");
 
 const should = chai.should();
+const expect = chai.expect;
 
 chai.use(chaiHttp);
 
-describe("/GET characters", () => {
-  it("it should Get all characters", (done) => {
-    chai
-      .request(app)
-      .get("/characters")
-      .end((err, res) => {
-        res.should.have.status(200);
-        res.body.should.be.a("object");
-        done();
-      });
-  });
-});
+describe("Characters tests", () => {
+  // it("should get all characters name and image", (done) => {
+  //   chai
+  //     .request(app)
+  //     .get("/characters")
+  //     .end((err, res) => {
+  //       expect(res).to.have.status(200);
+  //       expect(res).to.be.json;
+  //       expect(res).to.have.property("body");
+  //       expect(res.body).to.have.property("data")
+  //       expect(res.body.data.data).to.be.an('array');
+  //       done();
+  //     });
+  // });
 
-describe("/POST characters", () => {
-  it("it should create a new character", (done) => {
+  it("should send error message if body info is incorrect or missing", (done) => {
     const character = {
       image: "character.jpg",
-      name: "newCharacter",
+      name: null,
       age: 2,
       weight: 10,
       history: "character's history",
@@ -34,9 +36,25 @@ describe("/POST characters", () => {
       .request(app)
       .post("/characters/create")
       .send(character)
-      .end( function(err,res){
-        res.should.have.status(200);
-        res.body.should.have.property('data');        
+      .end((err, res) => {
+        expect(res).to.have.status(200);
+        expect(res.body).to.deep.nested.property("data.data");
+        expect(res.body)
+          .to.deep.nested.property("data.data.name")
+          .eq("newCharacter");
+        done();
+      });
+  });
+
+  it("should return an error if the character doesn't exist", (done) => {
+    chai
+      .request(app)
+      .get("/characters/detail/-1")
+      .end((err, res) => {
+        expect(res).to.have.status(404);
+        expect(res).to.be.an("object");
+        expect(res.body).to.have.property("message");
+        expect(res.body.message).to.be.eq("The character doesn't exist");
         done();
       });
   });

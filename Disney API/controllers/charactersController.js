@@ -1,9 +1,9 @@
 const db = require("../database/models");
 const { Op } = require("sequelize");
+const { validationResult } = require("express-validator");
 
 module.exports = {
   list: (req, res) => {
-
     function getCharacterSearch(req) {
       characterSearch = {};
 
@@ -31,7 +31,7 @@ module.exports = {
     db.Character.findAll({
       attributes: ["name", "image"],
       where: getCharacterSearch(req),
-      // include: req.query.movie ? 
+      // include: req.query.movie ?
       //     [
       //       {
       //         model: db.Movie,
@@ -40,7 +40,7 @@ module.exports = {
       //         where: {
       //             id: {
       //               [Op.like]: req.query.movie,
-      //             },                
+      //             },
       //         },
       //       },
       //     ]
@@ -54,7 +54,7 @@ module.exports = {
             url: "characters",
           },
           data: {
-            data
+            data,
           },
         };
         res.json(response);
@@ -62,6 +62,9 @@ module.exports = {
       .catch((error) => console.log(error));
   },
   create: (req, res) => {
+    let errors = validationResult(req);
+
+    if (errors.isEmpty()) {      
     const { image, name, age, weight, history } = req.body;
 
     db.Character.create({
@@ -79,12 +82,21 @@ module.exports = {
             url: "characters/create",
           },
           data: {
-            data
+            data,
           },
         };
         res.json(response);
       })
       .catch((error) => console.log(error));
+    } else {
+      let response = {
+        meta: {
+          status: 400,
+          errors: errors.mapped(),
+        },
+      };
+      res.status(400).json(response);
+    }
   },
   update: (req, res) => {
     const { image, name, age, weight, history } = req.body;
@@ -96,10 +108,10 @@ module.exports = {
         age: +age,
         weight: +weight,
         history: history.trim(),
-        },
-        {
-          where: { id: req.params.id },
-        }
+      },
+      {
+        where: { id: req.params.id },
+      }
     )
       .then((data) => {
         let response = {
@@ -108,7 +120,7 @@ module.exports = {
             url: "characters/update/:id",
           },
           data: {
-            data
+            data,
           },
         };
         res.json(response);
@@ -148,16 +160,22 @@ module.exports = {
       ],
     })
       .then((data) => {
-        let response = {
-          meta: {
-            status: 200,
-            url: "characters/detail/:id",
-          },
-          data: {
-            data
-          },
-        };
-        res.json(response);
+        if (!data) {
+          return res
+            .status(404)
+            .json({ message: "The character doesn't exist" });
+        } else {
+          let response = {
+            meta: {
+              status: 200,
+              url: "characters/detail/:id",
+            },
+            data: {
+              data,
+            },
+          };
+          res.json(response);
+        }        
       })
       .catch((error) => console.log(error));
   },
